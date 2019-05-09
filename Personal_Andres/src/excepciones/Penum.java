@@ -1,5 +1,6 @@
 package excepciones;
 
-public class Penum {
+public enum Penum {
 
+    SUMA, RESTA, MULTIPLICACION, DIVISION;
 }
