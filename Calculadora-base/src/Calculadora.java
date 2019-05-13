@@ -1,16 +1,27 @@
 public class Calculadora {
-    interface EnumCalculadora();
 
-    PrincipalCalculadora operacionElegida;
+    long suma(final long numeroUno, final long numeroDos) {
+        final long resultado = numeroUno + numeroDos;
+        System.out.println("El resultado de la operación " + EnumCalculadora.SUMA + " es: " + resultado);
+        return resultado;
+    }
 
-    void SUMA ( final long numeroUno,final long numeroDos){
-        resultado = numeroUno + numeroDos;
-        System.out.println("El resultado de la operación " + operacionElegida.SUMA + " es: " + resultado);
-        return;
-        }resultado=numeroUno+numeroDos;System.out.println("El resultado de la operación "+operacionElegida.SUMA+" es: "+resultado);
+    long resta(final long numeroUno, final long numeroDos) {
+        final long resultado = numeroUno - numeroDos;
+        System.out.println("El resultado de la operación " + EnumCalculadora.RESTA + " es: " + resultado);
+        return resultado;
+    }
 
-        case RESTA:resultado=numeroUno-numeroDos;System.out.println("El resultado de la operación "+operacionElegida.RESTA+" es: "+resultado);break;case MULTIPLICACION:resultado=numeroUno*numeroDos;System.out.println("El resultado de la operación "+operacionElegida.MULTIPLICACION+" es: "+resultado);break;case DIVISION:resultado=numeroUno/numeroDos;System.out.println("El resultado de la operación "+operacionElegida.DIVISION+" es: "+resultado);break;default:System.out.println("Error en la operación bye!!");break;
+    long multiplicacion(final long numeroUno, final long numeroDos) {
+        final long resultado = numeroUno * numeroDos;
+        System.out.println("El resultado de la operación " + EnumCalculadora.MULTIPLICACION + " es: " + resultado);
+        return resultado;
 
     }
 
+    long division(final long numeroUno, final long numeroDos) {
+        final long resultado = numeroUno / numeroDos;
+        System.out.println("El resultado de la operación " + EnumCalculadora.DIVISION + " es: " + resultado);
+        return resultado;
+    }
 }

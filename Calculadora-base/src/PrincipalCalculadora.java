@@ -1,34 +1,42 @@
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class PrincipalCalculadora {
 
-    private static final LocalDate LocalDate = null;
-
     public static void main(final String[] args) {
 
-        final Scanner entrada = new Scanner(System.in);
-        long resultado;
-        long numeroUno;
-        long numeroDos;
-        final String operacion = null;
+        Scanner entrada = new Scanner(System.in);
+        // eleccionInicial;
+        long resultado = 0;
+        long numeroUno = 0;
+        long numeroDos = 0;
+        String operacion = null;
         Boolean checkUno = false;
         Boolean validarOper = false;
         EnumCalculadora operacionElegida = null;
+
+        // System.out.println("¿Que quieres hacer?");
+//        System.out.println("Teclea 1 para Operacion");
+//        System.out.println("Teclea 2 para Revisar Historial");
+//        System.out.println("Teclea 3 para Salir");
+//        eleccionInicial = entrada.nextInt();
+
+        // switch (eleccionInicial) {
+        // case 1:
 
         do {
             try {
 
                 System.out.println("Inserte el primer núermo");
-                numeroUno = entrada.nextInt();
+                numeroUno = entrada.nextLong();
                 checkUno = false;
             } catch (final InputMismatchException e) {
-                System.out.println("Inserte un número váido");
+                System.out.println("Inserte un número válido");
                 checkUno = true;
             }
 
@@ -38,7 +46,7 @@ public class PrincipalCalculadora {
             try {
                 entrada = new Scanner(System.in);
                 System.out.println("Inserte el segundo núermo");
-                numeroDos = entrada.nextInt();
+                numeroDos = entrada.nextLong();
                 checkUno = false;
             } catch (final InputMismatchException e) {
                 System.out.println("Inserte un número váido");
@@ -63,70 +71,60 @@ public class PrincipalCalculadora {
                 System.out.println("Operación invalida, vuelva a intentar");
                 validarOper = true;
             } catch (IllegalArgumentException | NullPointerException ex) {
-                System.out.println("Operación invalida, se termina el programa, bye!!!");
+                System.out.println("Operación invalida, se cierra");
                 validarOper = true;
             }
         } while (validarOper);
+
+        final Calculadora calculadora = new Calculadora();
         switch (operacionElegida) {
         case SUMA:
-            resultado = numeroUno + numeroDos;
-            System.out.println("El resultado de la operación " + operacionElegida.SUMA + " es: " + resultado);
+            resultado = calculadora.suma(numeroUno, numeroDos);
             break;
         case RESTA:
-            resultado = numeroUno - numeroDos;
-            System.out.println("El resultado de la operación " + operacionElegida.RESTA + " es: " + resultado);
+            resultado = calculadora.suma(numeroUno, numeroDos);
             break;
         case MULTIPLICACION:
-            resultado = numeroUno * numeroDos;
-            System.out.println("El resultado de la operación " + operacionElegida.MULTIPLICACION + " es: " + resultado);
+            resultado = calculadora.suma(numeroUno, numeroDos);
             break;
         case DIVISION:
-            resultado = numeroUno / numeroDos;
-            System.out.println("El resultado de la operación " + operacionElegida.DIVISION + " es: " + resultado);
+            resultado = calculadora.suma(numeroUno, numeroDos);
             break;
         default:
             System.out.println("!NO!");
             break;
-
         }
 
         if (entrada != null) {
             entrada.close();
         }
 
-        // (
-//              id serial NOT NULL,
-        // varchar NULL,
-        // numeric NULL,
-        // numeric NULL,
-        // numeric NULL,
-        // date NULL,
-        // varchar NULL,
-        // CONSTRAINT calculadora_pk PRIMARY KEY (id)
-        // );
         final String nombreMio = "Andres Santiago";
-        // LocalDate date = LocalDate;
         final Conexion conectar = new Conexion();
 
         final Connection connection = conectar.conectarBaseDeDatos();
 
-        final String nombreTabla = "CREATE TABLE public.calculadora";
-        final String insertarPersonajes = "INSERT INTO public.\"" + nombreTabla
+        final String nombreTabla = "calculadora";
+        final String insertarValores = "INSERT INTO public.\"" + nombreTabla
                 + "\" (operacion,numero1,numero2,resultado,fecha,alumno) VALUES (?,?,?,?,?,?);";
-
-        final String consultarPersonajesSelect = "SELECT * FROM public.\"" + nombreTabla + "\";";
+        final String consultarValores = "SELECT * FROM public.\"" + nombreTabla + "\";";
 
         try {
-            PreparedStatement ps = connection.prepareStatement(insertarPersonajes);
+
+            PreparedStatement ps = null;
+            ps = connection.prepareStatement(insertarValores);
             ps.setString(1, operacion);
             ps.setLong(2, numeroUno);
             ps.setLong(3, numeroDos);
             ps.setLong(4, resultado);
-            ps.setInt(5, LocalDate);
+            ps.setDate(5, new Date(System.currentTimeMillis()));
             ps.setString(6, nombreMio);
             ps.executeUpdate();
-            ps = connection.prepareStatement(consultarPersonajesSelect);
+            ps = connection.prepareStatement(consultarValores);
+//            break;
 
+            // case 2:
+            ps = connection.prepareStatement(consultarValores);
             final ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 System.out.print("//");
@@ -149,7 +147,12 @@ public class PrincipalCalculadora {
 
         } catch (final SQLException e) {
             e.printStackTrace();
+//            break;
 
+//        default:
+            // System.out.println("!!");
+            // break;
+            // }
         }
 
     }
